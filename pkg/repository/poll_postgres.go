@@ -20,7 +20,7 @@ func (r *PollPostgres) CreatePoll(poll RestApiProj.INCreate) (int, error) {
 		return 0, err
 	}
 	var pollId int
-	createPollQuery := fmt.Sprint("INSERT INTO polls (name) VALUES $1 RETURNING id")
+	createPollQuery := fmt.Sprint("INSERT INTO polls (name) VALUES ($1) RETURNING id")
 
 	row := tx.QueryRow(createPollQuery, poll.Name)
 	err = row.Scan(&pollId)
@@ -57,7 +57,7 @@ func (r *PollPostgres) Polling(poll RestApiProj.INChoice) error {
 func (r *PollPostgres) GetPoll(poll RestApiProj.INGet) ([]RestApiProj.Poll, error) {
 	var choices []RestApiProj.Poll
 	query := fmt.Sprintf("SELECT choice, call FROM choices WHERE poll_id=%d", poll.Id)
-	if err := r.db.Get(&choices, query); err != nil {
+	if err := r.db.Select(&choices, query); err != nil {
 		return nil, err
 	}
 	return choices, nil

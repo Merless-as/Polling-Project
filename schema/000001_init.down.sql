@@ -1,3 +1,3 @@
-DROP TABLE polls;
+DROP TABLE polls cascade;
 
 DROP TABLE choices;
