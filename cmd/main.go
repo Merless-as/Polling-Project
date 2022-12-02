@@ -42,7 +42,3 @@ func initConfig() error {
 	viper.SetConfigName("config")
 	return viper.ReadInConfig()
 }
-
-//func initMigrate() {
-//	m, err := migrate.New()
-//}

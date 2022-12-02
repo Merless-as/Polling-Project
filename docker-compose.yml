@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  Polling-Project:
+    build: ./
+    command: wait-for-postgres.sh db ./Polling-Project
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      - DB_PASSWORD=postgres
+
+
+  db:
+    restart: always
+    image: postgres:lastest
+    volumes:
+      - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5436:5432
